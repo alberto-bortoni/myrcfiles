@@ -74,6 +74,7 @@ let g:netrw_liststyle=3    " tree view
 "         Plug pluggins stuff          "
 """"""""""""""""""""""""""""""""""""""""
 "call plug#begin('~\AppData\Local\nvim\plugged')
+"call plug#begin('~/.config/nvim/plugged')
 call plug#begin('~/.vim/plugged')
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
