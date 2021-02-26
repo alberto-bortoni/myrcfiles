@@ -1,10 +1,10 @@
+#fetch the highlight for languages
 include /usr/share/nano/sh.nanorc
 include /usr/share/nano/c.nanorc
 include /usr/share/nano/man.nanorc
 include /usr/share/nano/python.nanorc
 include /usr/share/nano/nanorc.nanorc
 include /usr/share/nano/html.nanorc
-
 
 # Use this tab size instead of the default; it must be greater than 0
 set tabsize 2
@@ -26,3 +26,13 @@ set tabstospaces
 
 # dont append lines
 set nonewlines
+
+#display the line numbers
+set linenumbers
+
+#set different colors for environment
+set titlecolor red,yellow
+set numbercolor white
+set statuscolor red,yellow
+set keycolor red,yellow
+set functioncolor white
