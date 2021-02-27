@@ -23,6 +23,7 @@
 [alias]
   aliases = !git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1\t = \\2/g'
   st      = status
+  co      = checkout
   adda    = add .
   pullr   = pull --rebase
   diffm   = difftool -t meld
