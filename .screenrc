@@ -12,3 +12,7 @@ defscrollback 1000
 
 #forward colors
 term xterm-256color
+
+#make colors forward in screen
+altscreen on
+defbce on
