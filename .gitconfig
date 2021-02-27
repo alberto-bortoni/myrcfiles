@@ -3,7 +3,8 @@
 
 [core]
   editor = nano
-	
+  whitespace = -trailing-space
+
 [merge]
   tool = kdiff3
   
@@ -17,12 +18,16 @@
 
 [credential]
 	helper = cache --timeout=1200
+  username = alberto-bortoni
 
 [alias]
-  st = status
-  adda = add .
-  pullr = pull --rebase
-  diffm = difftool -t meld
-  diffc = diff --color
-  logc = log --color --oneline
-  loga = log --oneline --graph --decorate --all --color
+  aliases = !git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1\t = \\2/g'
+  st      = status
+  adda    = add .
+  pullr   = pull --rebase
+  diffm   = difftool -t meld
+  diffc   = diff --color
+  logc    = log --color --oneline
+  loga    = log --oneline --graph --decorate --all --color
+  oops    = commit --ammend --no-edit
+  uncomit = reset --soft HEAD~1

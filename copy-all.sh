@@ -1,6 +1,6 @@
 #!/bin/bash
-cp -rf .vim ~/h
-cp -f  .bashrc ~/h
-cp -f  .gitconfig ~/h
-cp -f  .nanorc ~/h
-cp -f  .screenrc ~/h
+cp -rf .vim ~/
+cp -f  .bashrc ~/
+cp -f  .gitconfig ~/
+cp -f  .nanorc ~/
+cp -f  .screenrc ~/
