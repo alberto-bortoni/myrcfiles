@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "elo"
 cp -rf .vim ~/h
 cp -f  .bashrc ~/h
 cp -f  .gitconfig ~/h

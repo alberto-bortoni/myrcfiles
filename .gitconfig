@@ -1,8 +1,8 @@
 [color]
-	ui = true
+  ui = true
 
 [core]
-	editor = nano
+  editor = nano
 	
 [merge]
   tool = kdiff3
@@ -12,14 +12,17 @@
   tool = meld
 
 [user]
-	name = Alberto Bortoni
-	email = alb.bortoni@gmail.com
+  name = Alberto Bortoni
+  email = alb.bortoni@gmail.com
+
+[credential]
+	helper = cache --timeout=1200
 
 [alias]
-	st = status
-	up = pull --rebase
-	upm = pull --rebase origin refs/heads/master
-	diffm = difftool -t meld
-	diffc = diff --color
-	logc = log --color --oneline
-	loga = log --oneline --graph --decorate --all --color
+  st = status
+  adda = add .
+  pullr = pull --rebase
+  diffm = difftool -t meld
+  diffc = diff --color
+  logc = log --color --oneline
+  loga = log --oneline --graph --decorate --all --color
