@@ -30,5 +30,5 @@
   diffc   = diff --color
   logc    = log --color --oneline
   loga    = log --oneline --graph --decorate --all --color
-  oops    = commit --ammend --no-edit
+  oops    = commit --amend --no-edit
   uncomit = reset --soft HEAD~1
