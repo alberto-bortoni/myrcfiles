@@ -31,4 +31,5 @@
   logc    = log --color --oneline
   loga    = log --oneline --graph --decorate --all --color
   oops    = commit --amend --no-edit
-  uncomit = reset --soft HEAD~1
+  uncommit = reset --soft HEAD~1
+  cleanwho = clean -n
