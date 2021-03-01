@@ -29,7 +29,8 @@
   diffm   = difftool -t meld
   diffc   = diff --color
   logc    = log --color --oneline
-  loga    = log --oneline --graph --decorate --all --color
+  logg    = log --oneline --graph --decorate --color -n 20
   oops    = commit --amend --no-edit
   uncommit = reset --soft HEAD~1
   cleanwho = clean -n
+  drymerge = merge --no-commit --no-ff
