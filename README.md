@@ -27,5 +27,9 @@ The result should be:xterm-256color or screen-256color.
 To define the TERM:
 export TERM=xterm-256color
 after this it should load correclty
+This will only work for this session, PUTTY should enable xterm-256color
+
+HOSTNAME
+hostnamectl set-hostname [new-hostname]
 
 source ~/.bashrc
