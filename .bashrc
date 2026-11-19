@@ -7,71 +7,52 @@ case $- in
       *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
-shopt -s histappend
+######################################################################
+# history
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
+HISTCONTROL=ignoreboth        # no duplicates, no space-prefixed lines
+HISTSIZE=10000
+HISTFILESIZE=20000
+HISTTIMEFORMAT="%F %T "       # timestamps in `history` output
+shopt -s histappend           # append rather than overwrite
 
 
 ######################################################################
-# promt color
+# shell options
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
+shopt -s checkwinsize         # update LINES/COLUMNS after each command
+shopt -s globstar             # ** matches recursively (e.g. ls **/*.py)
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-force_color_prompt=yes
+######################################################################
+# environment
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
+export EDITOR=vim             # change to nano/micro/etc if you prefer
+export VISUAL=$EDITOR
 
-if [ "$color_prompt" = yes ]; then
-    PS1='\[\e[0;37m\][\[\e[0;32m\]\u\[\e[m\]\[\e[1;31m\]@\[\e[0;35m\]\h \[\e[0;36m\]\w\[\033[0;33;49m\]$(parse_git_branch)\[\033[0;0m\]\[\e[m\]\[\e[1;32m\]\[\e[0;37m\]]\$\[\e[m\] \[\e[0;00m\]'
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
 
-# If this is an xterm set the title to user@host:dir
+######################################################################
+# prompt
+
+parse_git_branch() {
+  ref=$(git symbolic-ref HEAD 2>/dev/null) || return
+  echo "(${ref#refs/heads/})"
+}
+
+PS1='\[\e[0;37m\][\[\e[0;32m\]\u\[\e[m\]\[\e[1;31m\]@\[\e[0;35m\]\h \[\e[0;36m\]\W\[\033[0;33;49m\]$(parse_git_branch)\[\033[0;0m\]\[\e[m\]\[\e[1;32m\]\[\e[0;37m\]]\$\[\e[m\] \[\e[0;00m\]'
+
+# set terminal title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
+    PS1="\[\e]0;\u@\h: \W\a\]$PS1"
     ;;
 esac
 
 
 ######################################################################
-# alias
-# enable color support of ls and also add handy aliases
+# aliases and colors
+
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
@@ -82,9 +63,9 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+######################################################################
+# bash completion
+
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
@@ -94,23 +75,39 @@ if ! shopt -oq posix; then
 fi
 
 
+######################################################################
+# nvm + PATH
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+export PATH="$HOME/.local/bin:$PATH"
 
 
 ######################################################################
-# other functions
+# machine-specific — everything below is guarded; harmless elsewhere
 
-function parse_git_branch() {
-  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-  echo "("${ref#refs/heads/}")"
-}
+# flutter SDK
+[ -d "$HOME/flutter/bin" ] && export PATH="$HOME/flutter/bin:$PATH"
 
-function parse_git_tag() {
-  lsha=$(git rev-parse HEAD 2> /dev/null) || return
-  tag=$(git describe --tags --exact-match ${lsha} 2> /dev/null) || return
-  echo " ⚑ "${tag#refs/tags/}""
-}
+# claude + vim kitty session
+[ -r ~/.config/kitty/claude-vim.conf ] && \
+    alias claudec='(kitty --session ~/.config/kitty/claude-vim.conf >/dev/null 2>&1 &)'
 
+# conda — block between the markers is managed by 'conda init'; don't hand-edit
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/abortoni/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/abortoni/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/abortoni/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/abortoni/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 
-#####################################################################
-#dont go to sleep
-setterm -blank 0 -powerdown 0
