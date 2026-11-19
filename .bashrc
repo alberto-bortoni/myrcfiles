@@ -53,7 +53,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='\[\e[0;37m\][\[\e[0;32m\]\u\[\e[m\]\[\e[1;31m\]@\e[0;35m\]\h \[\e[0;36m\]\w\[\033[0;33;49m\]$(parse_git_branch)\[\033[0;0m\]\[\e[m\]\[\e[1;32m\]\[\e[0;37m\]]\$\[\e[m\] \[\e[0;00m\]'
+    PS1='\[\e[0;37m\][\[\e[0;32m\]\u\[\e[m\]\[\e[1;31m\]@\[\e[0;35m\]\h \[\e[0;36m\]\w\[\033[0;33;49m\]$(parse_git_branch)\[\033[0;0m\]\[\e[m\]\[\e[1;32m\]\[\e[0;37m\]]\$\[\e[m\] \[\e[0;00m\]'
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
