@@ -26,6 +26,16 @@ shopt -s globstar             # ** matches recursively (e.g. ls **/*.py)
 
 
 ######################################################################
+# line editing (vi mode)
+
+set -o vi                                 # vim keys on the command line; Esc → normal
+bind 'set show-mode-in-prompt on'         # mode marker before the prompt
+bind 'set vi-ins-mode-string "+"'         # insert mode
+bind 'set vi-cmd-mode-string ":"'         # normal mode (v opens line in $EDITOR)
+bind -m vi-insert '"\C-l": clear-screen'  # keep Ctrl-L clear while typing
+
+
+######################################################################
 # environment
 
 export EDITOR=vim             # change to nano/micro/etc if you prefer
